@@ -3,6 +3,7 @@
 A synthetic benchmark to compare the performance of various sql-drivers for Go's database/sql package
 
 ## Results
+* Intel Core i5-2500K (3.30 GHz), 8 GB RAM
 * Go 1.0.3, MySQL 5.1, Windows 7 x64
 * Current Go-MySQL-Driver and mymysql versions as of February 25, 2013
 
