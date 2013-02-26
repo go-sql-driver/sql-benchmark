@@ -130,6 +130,7 @@ public class SQLBenchmark {
             SQLBenchmark.printResult("PreparedQuery", (endTime-startTime), 10000);
 
 
+            System.out.println();
             System.out.println("-------------------------------------------------------------");
             System.out.println("   [100 * QueryRow] * 1000");
             System.out.println("-------------------------------------------------------------");
@@ -186,6 +187,7 @@ public class SQLBenchmark {
             SQLBenchmark.printResult("PreparedQueryRow", (endTime-startTime), 100000);
 
 
+            System.out.println();
             System.out.println("-------------------------------------------------------------");
             System.out.println("   [100000 * Exec]");
             System.out.println("-------------------------------------------------------------");
@@ -196,7 +198,7 @@ public class SQLBenchmark {
                 stmt.execute("SET @test_var=1");
             }
             endTime = System.currentTimeMillis();
-            SQLBenchmark.printResult("SimpleQueryRow", (endTime-startTime), 100000);
+            SQLBenchmark.printResult("SimpleExec", (endTime-startTime), 100000);
 
             // PreparedExec
             startTime = System.currentTimeMillis();
@@ -206,7 +208,7 @@ public class SQLBenchmark {
             }
             pStmt.close();
             endTime = System.currentTimeMillis();
-            SQLBenchmark.printResult("PreparedQueryRow", (endTime-startTime), 100000);
+            SQLBenchmark.printResult("PreparedExec", (endTime-startTime), 100000);
 
         } catch (Exception e) {
             System.err.println(e);
