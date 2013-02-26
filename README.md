@@ -4,8 +4,64 @@ A synthetic benchmark to compare the performance of various sql-drivers for Go's
 
 ## Results
 * Intel Core i5-2500K (3.30 GHz), 8 GB RAM
-* Go 1.0.3, MySQL 5.1, Windows 7 x64
+* MySQL 5.1, Windows 7 x64
 * Current [Go-MySQL-Driver](https://github.com/Go-SQL-Driver/MySQL) and [mymysql](https://github.com/ziutek/mymysql) versions as of February 25, 2013
+
+### Overview
+#### Go1.0.3
+<table>
+    <tr>
+        <th>Benchmark</th>
+        <th><a href="https://github.com/Go-SQL-Driver/MySQL">Go-MySQL-Driver</a></th>
+        <th><a href="https://github.com/ziutek/mymysql">mymysql godrv</a></th>
+        <th><a href="http://dev.mysql.com/downloads/connector/j/">Java (JDBC) + MySQL Connector/J 5.1.23</a></th>
+    </tr>
+    <tr>
+        <th>SimpleQuery</th>
+        <td>2789 queries/second</td>
+        <td>1762 queries/second</td>
+        <td><b>5266</b> queries/second</td>
+    </tr>
+    <tr>
+        <th>PreparedQuery</th>
+        <td>3279 queries/second</td>
+        <td>2015 queries/second</td>
+        <td><b>6353</b> queries/second</td>
+    </tr>
+    <tr>
+        <th>AutoQueryRow</th>
+        <td><b>7622</b> queries/second</td>
+        <td>5446 queries/second</td>
+        <td> - </td>
+    </tr>
+    <tr>
+        <th>SimpleQueryRow</th>
+        <td>7783 queries/second</td>
+        <td>5746 queries/second</td>
+        <td><b>14063</b> queries/second</td>
+    </tr>
+    <tr>
+        <th>PreparedQueryRow</th>
+        <td><b>15953</b> queries/second</td>
+        <td>11139 queries/second</td>
+        <td>14327 queries/second</td>
+    </tr>
+    <tr>
+        <th>SimpleExec</th>
+        <td><b>29332</b> queries/second</td>
+        <td>10531 queries/second</td>
+        <td>24231 queries/second</td>
+    </tr>
+    <tr>
+        <th>PreparedExec</th>
+        <td><b>30626</b> queries/second</td>
+        <td>26873 queries/second</td>
+        <td>25654 queries/second</td>
+    </tr>
+</table>
+
+### Original Logs
+#### Go1.0.3
 
 ```
 D:\Development\Go\SQL-Benchmark>go build sqlBenchmark.go
@@ -110,6 +166,7 @@ PreparedExec: 3.7212129s [ 26873 queries/second ]
 D:\Development\Go\SQL-Benchmark>
 ```
 
+### Java
 Same machine, Java (JDK7 / 64 bit) + [MySQL Connector/J 5.1.23](http://dev.mysql.com/downloads/connector/j/)
 ```
 -------------------------------------------------------------
