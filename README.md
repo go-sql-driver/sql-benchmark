@@ -3,12 +3,75 @@
 A synthetic benchmark to compare the performance of various sql-drivers for Go's database/sql package
 
 ## Results
+### Setup
 * Intel Core i5-2500K (3.30 GHz), 8 GB RAM
 * MySQL 5.1, Windows 7 x64
 * Current [Go-MySQL-Driver](https://github.com/Go-SQL-Driver/MySQL) and [mymysql](https://github.com/ziutek/mymysql) versions as of February 25, 2013
+* Java7 (JDBC) + MySQL Connector/J 5.1.23 for comparision
 
-### Overview
-#### Go1.0.3
+### Notes
+* Please don't try to compare the benchmark sets (Query | QueryRow | Exec) to each other. They test different things. So you can't say QueryRow is faster than Query. In fact QueryRow is just a shortcut which uses Query internaly.
+* The benchmarks are designed to minimize response latency from the server. We try to test the driver performance here ;)
+* The setup MySQL 5.1 + Windows isn't ideal. Maybe I'll setup a GNU/Linux + MariaDB 10.0 enviorment by time and run this again.
+* This benchmark isn't concurrent while most production apps will be. You might get many more queries/second by running them concurrent. I'll add a test by time (feel free to contribute).
+* The Go results tend to vary much more. Propably this is caused by the garberage collector.
+
+### Go tip
+* go version devel +646803253bb4 Tue Feb 26 09:51:33 2013
+* reverted [changeset ddb9e6365e57](http://code.google.com/p/go/source/detail?r=ddb9e6365e570c2619d88427176a465e8b76b4aa) because of [Issue #4802](golang.org/issue/4902)
+
+<table>
+    <tr>
+        <th>Benchmark</th>
+        <th><a href="https://github.com/Go-SQL-Driver/MySQL">Go-MySQL-Driver</a></th>
+        <th><a href="https://github.com/ziutek/mymysql">mymysql godrv</a></th>
+        <th><a href="http://dev.mysql.com/downloads/connector/j/">Java (JDBC) + MySQL Connector/J 5.1.23</a></th>
+    </tr>
+    <tr>
+        <th>SimpleQuery</th>
+        <td>3923 queries/second</td>
+        <td>2189 queries/second</td>
+        <td><b>5266</b> queries/second</td>
+    </tr>
+    <tr>
+        <th>PreparedQuery</th>
+        <td>3716 queries/second</td>
+        <td>2505 queries/second</td>
+        <td><b>6353</b> queries/second</td>
+    </tr>
+    <tr>
+        <th>AutoQueryRow</th>
+        <td><b>7748</b> queries/second</td>
+        <td>6038 queries/second</td>
+        <td> - </td>
+    </tr>
+    <tr>
+        <th>SimpleQueryRow</th>
+        <td><b>15075</b> queries/second</td>
+        <td>6302 queries/second</td>
+        <td>14063 queries/second</td>
+    </tr>
+    <tr>
+        <th>PreparedQueryRow</th>
+        <td><b>15539</b> queries/second</td>
+        <td>12780 queries/second</td>
+        <td>14327 queries/second</td>
+    </tr>
+    <tr>
+        <th>SimpleExec</th>
+        <td><b>29238</b> queries/second</td>
+        <td>10890 queries/second</td>
+        <td>24231 queries/second</td>
+    </tr>
+    <tr>
+        <th>PreparedExec</th>
+        <td><b>30384</b> queries/second</td>
+        <td>28041 queries/second</td>
+        <td>25654 queries/second</td>
+    </tr>
+</table>
+
+### Go1.0.3
 <table>
     <tr>
         <th>Benchmark</th>
@@ -61,12 +124,111 @@ A synthetic benchmark to compare the performance of various sql-drivers for Go's
 </table>
 
 ### Original Logs
+#### Go tip
+
+```
+*************************************************************
+   BENCHMARKING Go-MySQL-Driver [run 1]
+*************************************************************
+
+-------------------------------------------------------------
+   [10000 * Query 100 Rows]
+-------------------------------------------------------------
+SimpleQuery: 2.5491458s [ 3923 queries/second ]
+PreparedQuery: 2.6911539s [ 3716 queries/second ]
+
+-------------------------------------------------------------
+   [100 * QueryRow] * 1000
+-------------------------------------------------------------
+AutoQueryRow: 12.9067382s [ 7748 queries/second ]
+SimpleQueryRow: 6.6333794s [ 15075 queries/second ]
+PreparedQueryRow: 6.435368s [ 15539 queries/second ]
+
+-------------------------------------------------------------
+   [100000 * Exec]
+-------------------------------------------------------------
+SimpleExec: 3.4201956s [ 29238 queries/second ]
+PreparedExec: 3.2911882s [ 30384 queries/second ]
+
+
+*************************************************************
+   BENCHMARKING mymysql godrv [run 1]
+*************************************************************
+
+-------------------------------------------------------------
+   [10000 * Query 100 Rows]
+-------------------------------------------------------------
+SimpleQuery: 4.7472715s [ 2106 queries/second ]
+PreparedQuery: 4.0132295s [ 2492 queries/second ]
+
+-------------------------------------------------------------
+   [100 * QueryRow] * 1000
+-------------------------------------------------------------
+AutoQueryRow: 17.1259795s [ 5839 queries/second ]
+SimpleQueryRow: 16.3869373s [ 6102 queries/second ]
+PreparedQueryRow: 8.2984746s [ 12050 queries/second ]
+
+-------------------------------------------------------------
+   [100000 * Exec]
+-------------------------------------------------------------
+SimpleExec: 9.5775478s [ 10441 queries/second ]
+PreparedExec: 3.635208s [ 27509 queries/second ]
+
+
+*************************************************************
+   BENCHMARKING Go-MySQL-Driver [run 2]
+*************************************************************
+
+-------------------------------------------------------------
+   [10000 * Query 100 Rows]
+-------------------------------------------------------------
+SimpleQuery: 2.7761588s [ 3602 queries/second ]
+PreparedQuery: 2.8571634s [ 3500 queries/second ]
+
+-------------------------------------------------------------
+   [100 * QueryRow] * 1000
+-------------------------------------------------------------
+AutoQueryRow: 13.1287509s [ 7617 queries/second ]
+SimpleQueryRow: 6.9363968s [ 14417 queries/second ]
+PreparedQueryRow: 6.5493746s [ 15269 queries/second ]
+
+-------------------------------------------------------------
+   [100000 * Exec]
+-------------------------------------------------------------
+SimpleExec: 3.5402025s [ 28247 queries/second ]
+PreparedExec: 3.3021889s [ 30283 queries/second ]
+
+
+*************************************************************
+   BENCHMARKING mymysql godrv [run 2]
+*************************************************************
+
+-------------------------------------------------------------
+   [10000 * Query 100 Rows]
+-------------------------------------------------------------
+SimpleQuery: 4.5682613s [ 2189 queries/second ]
+PreparedQuery: 3.9912283s [ 2505 queries/second ]
+
+-------------------------------------------------------------
+   [100 * QueryRow] * 1000
+-------------------------------------------------------------
+AutoQueryRow: 16.5629474s [ 6038 queries/second ]
+SimpleQueryRow: 15.8679076s [ 6302 queries/second ]
+PreparedQueryRow: 7.8244476s [ 12780 queries/second ]
+
+-------------------------------------------------------------
+   [100000 * Exec]
+-------------------------------------------------------------
+SimpleExec: 9.1825252s [ 10890 queries/second ]
+PreparedExec: 3.566204s [ 28041 queries/second ]
+
+
+```
+
+
 #### Go1.0.3
 
 ```
-D:\Development\Go\SQL-Benchmark>go build sqlBenchmark.go
-
-D:\Development\Go\SQL-Benchmark>sqlBenchmark.exe
 *************************************************************
    BENCHMARKING Go-MySQL-Driver [run 1]
 *************************************************************
@@ -163,7 +325,6 @@ SimpleExec: 9.4955431s [ 10531 queries/second ]
 PreparedExec: 3.7212129s [ 26873 queries/second ]
 
 
-D:\Development\Go\SQL-Benchmark>
 ```
 
 ### Java
