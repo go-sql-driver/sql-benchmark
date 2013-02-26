@@ -117,14 +117,16 @@ Same machine, Java (JDK7 / 64 bit) + MySQL Connector/J 5.1.23
 -------------------------------------------------------------
 SimpleQuery: 1.899s [ 5266 queries/second ]
 PreparedQuery: 1.574s [ 6353 queries/second ]
+
 -------------------------------------------------------------
    [100 * QueryRow] * 1000
 -------------------------------------------------------------
 SimpleQueryRow: 7.111s [ 14063 queries/second ]
 PreparedQueryRow: 6.98s [ 14327 queries/second ]
+
 -------------------------------------------------------------
    [100000 * Exec]
 -------------------------------------------------------------
-SimpleQueryRow: 4.127s [ 24231 queries/second ]
-PreparedQueryRow: 3.898s [ 25654 queries/second ]
+SimpleExec: 4.127s [ 24231 queries/second ]
+PreparedExec: 3.898s [ 25654 queries/second ]
 ```
