@@ -14,7 +14,7 @@ A synthetic benchmark to compare the performance of various sql-drivers for Go's
 * The benchmarks are designed to minimize response latency from the server. We try to compare driver performance here and not to test the MySQL Server ;)
 * The setup MySQL 5.1 + Windows isn't ideal. Maybe I'll setup a GNU/Linux + MariaDB 10.0 enviornment by time and run this again.
 * This benchmark isn't concurrent while most production apps will be. You might get many more queries/second by running them concurrent. I'll add a test by time (feel free to contribute).
-* The Go results tend to vary much more. Probably this is caused by the garberage collector.
+* The Go results tend to vary much more. Probably this is caused by the garbage collector.
 
 ### Go tip
 * go version devel +646803253bb4 Tue Feb 26 09:51:33 2013
