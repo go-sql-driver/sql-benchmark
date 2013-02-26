@@ -5,7 +5,7 @@ A synthetic benchmark to compare the performance of various sql-drivers for Go's
 ## Results
 * Intel Core i5-2500K (3.30 GHz), 8 GB RAM
 * Go 1.0.3, MySQL 5.1, Windows 7 x64
-* Current Go-MySQL-Driver and mymysql versions as of February 25, 2013
+* Current [Go-MySQL-Driver](https://github.com/Go-SQL-Driver/MySQL) and [mymysql](https://github.com/ziutek/mymysql) versions as of February 25, 2013
 
 ```
 D:\Development\Go\SQL-Benchmark>go build sqlBenchmark.go
@@ -110,7 +110,7 @@ PreparedExec: 3.7212129s [ 26873 queries/second ]
 D:\Development\Go\SQL-Benchmark>
 ```
 
-Same machine, Java (JDK7 / 64 bit) + MySQL Connector/J 5.1.23
+Same machine, Java (JDK7 / 64 bit) + [MySQL Connector/J 5.1.23](http://dev.mysql.com/downloads/connector/j/)
 ```
 -------------------------------------------------------------
    [10000 * Query 100 Rows]
