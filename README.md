@@ -10,7 +10,7 @@ A synthetic benchmark to compare the performance of various sql-drivers for Go's
 * Java7 (JDBC) + MySQL Connector/J 5.1.23 for comparision
 
 ### Notes
-* Please don't try to compare the benchmark sets (Query | QueryRow | Exec) to each other. They test different things. So you can't say QueryRow is faster than Query. In fact QueryRow is just a shortcut which uses Query internally.
+* Please don't try to compare the benchmark sets (Query | QueryRow | Exec) to each other. They test different things. So you can't say QueryRow is faster than Query. In fact QueryRow is just a shortcut which uses Query internally. View the source to understand what we test here.
 * The benchmarks are designed to minimize response latency from the server. We try to compare driver performance here and not to test the MySQL Server ;)
 * The setup MySQL 5.1 + Windows isn't ideal. Maybe I'll setup a GNU/Linux + MariaDB 10.0 enviornment by time and run this again.
 * This benchmark isn't concurrent while most production apps will be. You might get many more queries/second by running them concurrent. I'll add a test by time (feel free to contribute).
