@@ -110,3 +110,21 @@ PreparedExec: 3.7212129s [ 26873 queries/second ]
 D:\Development\Go\SQL-Benchmark>
 ```
 
+Same machine, Java (JDK7 / 64 bit) + MySQL Connector/J 5.1.23
+```
+-------------------------------------------------------------
+   [10000 * Query 100 Rows]
+-------------------------------------------------------------
+SimpleQuery: 1.824s [ 5482 queries/second ]
+PreparedQuery: 1.357s [ 7369 queries/second ]
+-------------------------------------------------------------
+   [100 * QueryRow] * 1000
+-------------------------------------------------------------
+SimpleQueryRow: 6.807s [ 14691 queries/second ]
+PreparedQueryRow: 6.466s [ 15466 queries/second ]
+-------------------------------------------------------------
+   [100000 * Exec]
+-------------------------------------------------------------
+SimpleQueryRow: 3.765s [ 26560 queries/second ]
+PreparedQueryRow: 3.645s [ 27435 queries/second ]
+```
