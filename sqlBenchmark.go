@@ -241,8 +241,8 @@ func runBenchmark(name, driver, dsn string) {
 }
 
 func main() {
-	runBenchmark("Go-MySQL-Driver [run 1]", "mysql", "root@/gotest")
+	runBenchmark("Go-MySQL-Driver [run 1]", "mysql", "root@/gotest?autocommit=true")
 	runBenchmark("mymysql godrv [run 1]", "mymysql", "gotest/root/")
-	runBenchmark("Go-MySQL-Driver [run 2]", "mysql", "root@/gotest")
+	runBenchmark("Go-MySQL-Driver [run 2]", "mysql", "root@/gotest?autocommit=true")
 	runBenchmark("mymysql godrv [run 2]", "mymysql", "gotest/root/")
 }
