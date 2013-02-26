@@ -18,7 +18,7 @@ A synthetic benchmark to compare the performance of various sql-drivers for Go's
 
 ### Go tip
 * go version devel +646803253bb4 Tue Feb 26 09:51:33 2013
-* reverted [changeset ddb9e6365e57](http://code.google.com/p/go/source/detail?r=ddb9e6365e570c2619d88427176a465e8b76b4aa) because of [Issue #4802](golang.org/issue/4902)
+* reverted [changeset ddb9e6365e57](http://code.google.com/p/go/source/detail?r=ddb9e6365e570c2619d88427176a465e8b76b4aa) because of [Issue #4802](http://golang.org/issue/4902)
 
 <table>
     <tr>
