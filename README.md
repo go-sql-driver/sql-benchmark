@@ -4,7 +4,7 @@ A synthetic benchmark to compare the performance of various sql-drivers for Go's
 
 ## Results
 ### Older Results
-* [February 26, 2013](results_2013-02-26.mc)
+* [February 26, 2013](results_2013-02-26.md) // Show [Diff to March 02, 2013](https://github.com/Go-SQL-Driver/SQL-Benchmark/commit/52078ce64a397d94b08bc66f5d7acedf13d3364e)
 
 ### Setup
 * Intel Core i5-2500K (3.30 GHz), 8 GB RAM
