@@ -106,7 +106,7 @@ PreparedQuery: 2.752905968s [ 3633 queries/second ]
 panic: Received #1461 error from MySQL server: "Can't create more than max_prepared_stmt_count statements (current value: 16382)"
 ```
 
-The cause was in [sqlBenchmark.go:82](sqlBenchmark.go#L82). After removing the mymysql runs:
+The cause was in [sqlBenchmark.go:82](https://github.com/Go-SQL-Driver/SQL-Benchmark/blob/c84d727235f54a38e3ea3b9d94b75e6eeb51967a/sqlBenchmark.go#L82), reported as [issue 65](https://github.com/ziutek/mymysql/issues/65). After removing the mymysql runs:
 
 
 ```
