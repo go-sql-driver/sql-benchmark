@@ -80,7 +80,7 @@
     <tr>
         <th>AutoQueryRow</th>
         <td>4372 queries/second</td>
-        <td><b>9678</b> queries/second</td>
+        <td><b>9678</b>* queries/second</td>
         <td>-</td>
     </tr>
     <tr>
@@ -109,6 +109,7 @@
    </tr>
 </table>
 
+`* AutoQueryRow`: mymysql builds a single query string instead of using prepared statements
 
 ### Original Logs
 
