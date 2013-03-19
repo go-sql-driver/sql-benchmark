@@ -3,6 +3,9 @@
 A synthetic benchmark to compare the performance of various sql-drivers for Go's database/sql package
 
 ## Results
+### Contributed Results
+* [March 18, 2013](results-osx_2013-03-18.md) // OS X 10.8.3 / MySQL 5.6.10 by [Arne Hormann](https://github.com/arnehormann)
+
 ### Older Results
 * [February 26, 2013](results_2013-02-26.md) // Show [Diff to March 02, 2013](https://github.com/Go-SQL-Driver/SQL-Benchmark/commit/52078ce64a397d94b08bc66f5d7acedf13d3364e)
 
