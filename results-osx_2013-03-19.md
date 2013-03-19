@@ -80,7 +80,7 @@
     <tr>
         <th>AutoQueryRow</th>
         <td>5755 queries/second</td>
-        <td><b>8526</b> queries/second</td>
+        <td><b>8526</b>* queries/second</td>
         <td>- queries/second</td>
     </tr>
     <tr>
@@ -107,8 +107,9 @@
         <td>22753 queries/second</td>
         <td>15454 queries/second</td>
     </tr>
-
 </table>
+
+`* AutoQueryRow`: mymysql builds a single query string instead of using prepared statements
 
 ### Original Logs
 #### Go 1.0.3
