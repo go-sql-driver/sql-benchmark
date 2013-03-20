@@ -13,7 +13,7 @@ A synthetic benchmark to compare the performance of various sql-drivers for Go's
 ### Setup
 * Intel Core i5-2500K (3.30 GHz), 8 GB RAM
 * MySQL 5.1, Windows 7 x64
-* Current [Go-MySQL-Driver](https://github.com/Go-SQL-Driver/MySQL) and [mymysql](https://github.com/ziutek/mymysql) versions as of March 02, 2013
+* Current [Go-MySQL-Driver](https://github.com/go-sql-driver/mysql) and [mymysql](https://github.com/ziutek/mymysql) versions as of March 02, 2013
 * Java7 (JDBC) + MySQL Connector/J 5.1.23 for comparision
 
 ### Notes
@@ -30,7 +30,7 @@ A synthetic benchmark to compare the performance of various sql-drivers for Go's
 <table>
     <tr>
         <th>Benchmark</th>
-        <th><a href="https://github.com/Go-SQL-Driver/MySQL">Go-MySQL-Driver</a></th>
+        <th><a href="https://github.com/go-sql-driver/mysql">Go-MySQL-Driver</a></th>
         <th><a href="https://github.com/ziutek/mymysql">mymysql godrv</a></th>
         <th><a href="http://dev.mysql.com/downloads/connector/j/">Java (JDBC) + MySQL Connector/J 5.1.23</a></th>
     </tr>
@@ -82,7 +82,7 @@ A synthetic benchmark to compare the performance of various sql-drivers for Go's
 <table>
     <tr>
         <th>Benchmark</th>
-        <th><a href="https://github.com/Go-SQL-Driver/MySQL">Go-MySQL-Driver</a></th>
+        <th><a href="https://github.com/go-sql-driver/mysql">Go-MySQL-Driver</a></th>
         <th><a href="https://github.com/ziutek/mymysql">mymysql godrv</a></th>
         <th><a href="http://dev.mysql.com/downloads/connector/j/">Java (JDBC) + MySQL Connector/J 5.1.23</a></th>
     </tr>
