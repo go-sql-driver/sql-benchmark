@@ -1,0 +1,1 @@
+java -cp .\mysql-connector-java-5.1.26\mysql-connector-java-5.1.26-bin.jar;. SQLBenchmark 1>bench.log 2>&1 
