@@ -2,15 +2,32 @@ package main
 
 import (
 	"./framework"
+	"database/sql"
 	"fmt"
 	_ "github.com/go-sql-driver/mysql"
 	_ "github.com/ziutek/mymysql/godrv"
 )
 
+func warmup(db *sql.DB) error {
+	for i := 0; i < 100000; i++ {
+		rows, err := db.Query("SELECT \"Hello Gophers!\"")
+		if err != nil {
+			return err
+		}
+
+		if err = rows.Close(); err != nil {
+			return err
+		}
+	}
+	return nil
+}
+
 func main() {
 	var err error
 
-	bs := framework.BenchmarkSuite{}
+	bs := framework.BenchmarkSuite{
+		WarmUp: warmup,
+	}
 
 	if err = bs.AddDriver("mymysql godrv", "mymysql", "gotest/root/root"); err != nil {
 		fmt.Println(err)
