@@ -16,11 +16,23 @@ type Result struct {
 	Err      error
 	Queries  int
 	Duration time.Duration
+	Allocs   uint64
+	Bytes    uint64
 }
 
 func (res *Result) QueriesPerSecond() float64 {
 	return float64(res.Queries) / res.Duration.Seconds()
 }
+
+func (res *Result) AllocsPerQuery() int {
+	return int(res.Allocs) / res.Queries
+}
+
+func (res *Result) BytesPerQuery() int {
+	return int(res.Bytes) / res.Queries
+}
+
+var memStats runtime.MemStats
 
 type benchmark struct {
 	name string
@@ -31,14 +43,24 @@ type benchmark struct {
 func (b *benchmark) run(db *sql.DB) Result {
 	runtime.GC()
 
-	start := time.Now()
+	runtime.ReadMemStats(&memStats)
+	var (
+		startMallocs    = memStats.Mallocs
+		startTotalAlloc = memStats.TotalAlloc
+		startTime       = time.Now()
+	)
+
 	err := b.bm(db, b.n)
-	end := time.Now()
+
+	endTime := time.Now()
+	runtime.ReadMemStats(&memStats)
 
 	return Result{
 		Err:      err,
 		Queries:  b.n,
-		Duration: end.Sub(start),
+		Duration: endTime.Sub(startTime),
+		Allocs:   memStats.Mallocs - startMallocs,
+		Bytes:    memStats.TotalAlloc - startTotalAlloc,
 	}
 }
 
@@ -106,7 +128,12 @@ func (bs *BenchmarkSuite) Run() {
 			if res.Err != nil {
 				fmt.Println(res.Err.Error())
 			} else {
-				fmt.Println(res.Duration.String(), "   \t", res.QueriesPerSecond(), "queries/sec")
+				fmt.Println(
+					res.Duration.String(), "   \t",
+					res.QueriesPerSecond(), "queries/sec   \t",
+					res.AllocsPerQuery(), "allocs/query   \t",
+					res.BytesPerQuery(), "B/query",
+				)
 			}
 		}
 		fmt.Println()
