@@ -130,7 +130,7 @@ func (bs *BenchmarkSuite) Run() {
 			} else {
 				fmt.Println(
 					res.Duration.String(), "   \t",
-					res.QueriesPerSecond(), "queries/sec   \t",
+					int(res.QueriesPerSecond()+0.5), "queries/sec   \t",
 					res.AllocsPerQuery(), "allocs/query   \t",
 					res.BytesPerQuery(), "B/query",
 				)

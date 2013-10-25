@@ -2,6 +2,8 @@ package main
 
 import (
 	"database/sql"
+	"sync"
+	"sync/atomic"
 )
 
 func bmSimpleExec(db *sql.DB, n int) error {
@@ -221,4 +223,100 @@ func bmSelectPreparedLargeRaw(db *sql.DB, n int) error {
 		}
 	}
 	return nil
+}
+
+func runPreparedExecConcurrent(db *sql.DB, n int, co int) error {
+	stmt, err := db.Prepare("DO 1")
+	if err != nil {
+		return err
+	}
+
+	remain := int64(n)
+	var wg sync.WaitGroup
+	wg.Add(co)
+
+	for i := 0; i < co; i++ {
+		go func() {
+			for {
+				if atomic.AddInt64(&remain, -1) < 0 {
+					wg.Done()
+					return
+				}
+
+				if _, err1 := stmt.Exec(); err1 != nil {
+					wg.Done()
+					err = err1
+					return
+				}
+			}
+		}()
+	}
+	wg.Wait()
+	stmt.Close()
+	return err
+}
+
+func bmPreparedExecConcurrent2(db *sql.DB, n int) error {
+	return runPreparedExecConcurrent(db, n, 2)
+}
+
+func bmPreparedExecConcurrent4(db *sql.DB, n int) error {
+	return runPreparedExecConcurrent(db, n, 4)
+}
+
+func bmPreparedExecConcurrent8(db *sql.DB, n int) error {
+	return runPreparedExecConcurrent(db, n, 8)
+}
+
+func bmPreparedExecConcurrent16(db *sql.DB, n int) error {
+	return runPreparedExecConcurrent(db, n, 16)
+}
+
+func runPreparedQueryConcurrent(db *sql.DB, n int, co int) error {
+	stmt, err := db.Prepare("SELECT ?, \"foobar\"")
+	if err != nil {
+		return err
+	}
+
+	remain := int64(n)
+	var wg sync.WaitGroup
+	wg.Add(co)
+
+	for i := 0; i < co; i++ {
+		go func() {
+			var id int
+			var str string
+			for {
+				if atomic.AddInt64(&remain, -1) < 0 {
+					wg.Done()
+					return
+				}
+
+				if err1 := stmt.QueryRow(i).Scan(&id, &str); err1 != nil {
+					wg.Done()
+					err = err1
+					return
+				}
+			}
+		}()
+	}
+	wg.Wait()
+	stmt.Close()
+	return err
+}
+
+func bmPreparedQueryConcurrent2(db *sql.DB, n int) error {
+	return runPreparedQueryConcurrent(db, n, 2)
+}
+
+func bmPreparedQueryConcurrent4(db *sql.DB, n int) error {
+	return runPreparedQueryConcurrent(db, n, 4)
+}
+
+func bmPreparedQueryConcurrent8(db *sql.DB, n int) error {
+	return runPreparedQueryConcurrent(db, n, 8)
+}
+
+func bmPreparedQueryConcurrent16(db *sql.DB, n int) error {
+	return runPreparedQueryConcurrent(db, n, 16)
 }
