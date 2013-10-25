@@ -26,7 +26,8 @@ func main() {
 	var err error
 
 	bs := framework.BenchmarkSuite{
-		WarmUp: warmup,
+		WarmUp:      warmup,
+		Repetitions: 3,
 	}
 
 	if err = bs.AddDriver("Go-MySQL-Driver", "mysql", "root:root@/gotest"); err != nil {

@@ -65,9 +65,10 @@ func (b *benchmark) run(db *sql.DB) Result {
 }
 
 type BenchmarkSuite struct {
-	drivers    []driver
-	benchmarks []benchmark
-	WarmUp     func(*sql.DB) error
+	drivers     []driver
+	benchmarks  []benchmark
+	WarmUp      func(*sql.DB) error
+	Repetitions int
 }
 
 func (bs *BenchmarkSuite) AddDriver(name, drv, dsn string) error {
@@ -124,16 +125,18 @@ func (bs *BenchmarkSuite) Run() {
 		fmt.Println(benchmark.name, benchmark.n, "iterations")
 		for _, driver := range bs.drivers {
 			fmt.Println(driver.name)
-			res := benchmark.run(driver.db)
-			if res.Err != nil {
-				fmt.Println(res.Err.Error())
-			} else {
-				fmt.Println(
-					res.Duration.String(), "   \t",
-					int(res.QueriesPerSecond()+0.5), "queries/sec   \t",
-					res.AllocsPerQuery(), "allocs/query   \t",
-					res.BytesPerQuery(), "B/query",
-				)
+			for i := 0; i < bs.Repetitions; i++ {
+				res := benchmark.run(driver.db)
+				if res.Err != nil {
+					fmt.Println(res.Err.Error())
+				} else {
+					fmt.Println(
+						res.Duration.String(), "   \t",
+						int(res.QueriesPerSecond()+0.5), "queries/sec   \t",
+						res.AllocsPerQuery(), "allocs/query   \t",
+						res.BytesPerQuery(), "B/query",
+					)
+				}
 			}
 		}
 		fmt.Println()
