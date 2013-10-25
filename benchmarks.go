@@ -256,6 +256,10 @@ func runPreparedExecConcurrent(db *sql.DB, n int, co int) error {
 	return err
 }
 
+func bmPreparedExecConcurrent1(db *sql.DB, n int) error {
+	return runPreparedExecConcurrent(db, n, 1)
+}
+
 func bmPreparedExecConcurrent2(db *sql.DB, n int) error {
 	return runPreparedExecConcurrent(db, n, 2)
 }
@@ -303,6 +307,10 @@ func runPreparedQueryConcurrent(db *sql.DB, n int, co int) error {
 	wg.Wait()
 	stmt.Close()
 	return err
+}
+
+func bmPreparedQueryConcurrent1(db *sql.DB, n int) error {
+	return runPreparedQueryConcurrent(db, n, 1)
 }
 
 func bmPreparedQueryConcurrent2(db *sql.DB, n int) error {

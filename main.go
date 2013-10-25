@@ -9,6 +9,8 @@ import (
 )
 
 func warmup(db *sql.DB) error {
+	db.SetMaxIdleConns(16)
+
 	for i := 0; i < 100000; i++ {
 		rows, err := db.Query("SELECT \"Hello Gophers!\"")
 		if err != nil {
@@ -30,11 +32,11 @@ func main() {
 		Repetitions: 3,
 	}
 
-	if err = bs.AddDriver("Go-MySQL-Driver", "mysql", "root:root@/gotest"); err != nil {
+	if err = bs.AddDriver("mymysql godrv", "mymysql", "gotest/root/root"); err != nil {
 		fmt.Println(err)
 		return
 	}
-	if err = bs.AddDriver("mymysql godrv", "mymysql", "gotest/root/root"); err != nil {
+	if err = bs.AddDriver("Go-MySQL-Driver", "mysql", "root:root@/gotest"); err != nil {
 		fmt.Println(err)
 		return
 	}
@@ -51,10 +53,12 @@ func main() {
 	bs.AddBenchmark("SelectPreparedLargeBytes", 100000, bmSelectPreparedLargeBytes)
 	bs.AddBenchmark("SelectLargeRaw", 100000, bmSelectLargeRaw)
 	bs.AddBenchmark("SelectPreparedLargeRaw", 100000, bmSelectPreparedLargeRaw)
+	bs.AddBenchmark("PreparedExecConcurrent1", 500000, bmPreparedExecConcurrent2)
 	bs.AddBenchmark("PreparedExecConcurrent2", 500000, bmPreparedExecConcurrent2)
 	bs.AddBenchmark("PreparedExecConcurrent4", 500000, bmPreparedExecConcurrent4)
 	bs.AddBenchmark("PreparedExecConcurrent8", 500000, bmPreparedExecConcurrent8)
 	bs.AddBenchmark("PreparedExecConcurrent16", 500000, bmPreparedExecConcurrent16)
+	bs.AddBenchmark("PreparedQueryConcurrent1", 500000, bmPreparedQueryConcurrent2)
 	bs.AddBenchmark("PreparedQueryConcurrent2", 500000, bmPreparedQueryConcurrent2)
 	bs.AddBenchmark("PreparedQueryConcurrent4", 500000, bmPreparedQueryConcurrent4)
 	bs.AddBenchmark("PreparedQueryConcurrent8", 500000, bmPreparedQueryConcurrent8)
