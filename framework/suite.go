@@ -97,6 +97,8 @@ func (bs *BenchmarkSuite) AddBenchmark(name string, n int, bm func(*sql.DB, int)
 }
 
 func (bs *BenchmarkSuite) Run() {
+	startTime := time.Now()
+
 	if len(bs.drivers) < 1 {
 		fmt.Println("No drivers registered to run benchmarks with!")
 		return
@@ -141,4 +143,6 @@ func (bs *BenchmarkSuite) Run() {
 		}
 		fmt.Println()
 	}
+	endTime := time.Now()
+	fmt.Println("Finished... Total running time:", endTime.Sub(startTime).String())
 }
