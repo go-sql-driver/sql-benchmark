@@ -13,8 +13,8 @@ A synthetic benchmark to compare the performance of various sql-drivers for Go's
 
 
 ### Setup
-* Intel Core i5-2500K (3.30 GHz), 8 GB RAM
-* MySQL 5.5
+* Intel Core i5-2500K (4x 3.30 GHz), 8 GB RAM
+* MySQL 5.5.34
 * Ubuntu 13.10 x64 (Linux)
 * Go 1.2rc2 linux/amd64
 * [Go-MySQL-Driver v1.1 and v1.0.2](https://github.com/go-sql-driver/mysql) and [MyMySQL v1.5.3](https://github.com/ziutek/mymysql)
