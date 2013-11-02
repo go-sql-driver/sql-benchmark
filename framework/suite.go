@@ -4,6 +4,7 @@ import (
 	"database/sql"
 	"fmt"
 	"runtime"
+	"sort"
 	"time"
 )
 
@@ -69,6 +70,7 @@ type BenchmarkSuite struct {
 	benchmarks  []benchmark
 	WarmUp      func(*sql.DB) error
 	Repetitions int
+	PrintStats  bool
 }
 
 func (bs *BenchmarkSuite) AddDriver(name, drv, dsn string) error {
@@ -123,6 +125,13 @@ func (bs *BenchmarkSuite) Run() {
 	fmt.Println("Run Benchmarks...")
 	fmt.Println()
 
+	var qps []float64
+	if bs.Repetitions > 1 && bs.PrintStats {
+		qps = make([]float64, bs.Repetitions)
+	} else {
+	     bs.PrintStats = false
+	}
+
 	for _, benchmark := range bs.benchmarks {
 		fmt.Println(benchmark.name, benchmark.n, "iterations")
 		for _, driver := range bs.drivers {
@@ -133,14 +142,34 @@ func (bs *BenchmarkSuite) Run() {
 					fmt.Println(res.Err.Error())
 				} else {
 					fmt.Println(
-						res.Duration.String(), "   \t",
-						int(res.QueriesPerSecond()+0.5), "queries/sec   \t",
-						res.AllocsPerQuery(), "allocs/query   \t",
+						" " +
+						res.Duration.String(), "\t   ",
+						int(res.QueriesPerSecond()+0.5), "queries/sec\t   ",
+						res.AllocsPerQuery(), "allocs/query\t   ",
 						res.BytesPerQuery(), "B/query",
 					)
+					if bs.Repetitions > 1 {
+						qps[i] = res.QueriesPerSecond()
+					}
 				}
 			}
+			
+			if bs.PrintStats {
+		          var totalQps float64
+		          for i := range qps {
+		               totalQps += qps[i]
+		          }
+		          
+		          sort.Float64s(qps)
+		          
+		          fmt.Println(
+		               " -- " +
+		               "avg", int(totalQps/float64(len(qps)) +0.5), "qps;  "+
+		               "median", int(qps[len(qps)/2]+0.5), "qps",
+		          )
+		     }
 		}
+		
 		fmt.Println()
 	}
 	endTime := time.Now()

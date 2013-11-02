@@ -30,29 +30,30 @@ func main() {
 	bs := framework.BenchmarkSuite{
 		WarmUp:      warmup,
 		Repetitions: 3,
+		PrintStats:  true,
 	}
 
-	if err = bs.AddDriver("mymysql godrv", "mymysql", "gotest/root/root"); err != nil {
+	if err = bs.AddDriver("mymysql godrv", "mymysql", "/root/root"); err != nil {
 		fmt.Println(err)
 		return
 	}
-	if err = bs.AddDriver("Go-MySQL-Driver", "mysql", "root:root@/gotest"); err != nil {
+	if err = bs.AddDriver("Go-MySQL-Driver", "mysql", "root:root@/"); err != nil {
 		fmt.Println(err)
 		return
 	}
 
-	bs.AddBenchmark("SimpleExec", 500000, bmSimpleExec)
-	bs.AddBenchmark("PreparedExec", 500000, bmPreparedExec)
-	bs.AddBenchmark("SimpleQueryRow", 500000, bmSimpleQueryRow)
-	bs.AddBenchmark("PreparedQueryRow", 500000, bmPreparedQueryRow)
-	bs.AddBenchmark("PreparedQueryRowParam", 500000, bmPreparedQueryRowParam)
-	bs.AddBenchmark("EchoMixed5", 500000, bmEchoMixed5)
-	bs.AddBenchmark("SelectLargeString", 100000, bmSelectLargeString)
-	bs.AddBenchmark("SelectPreparedLargeString", 100000, bmSelectPreparedLargeString)
-	bs.AddBenchmark("SelectLargeBytes", 100000, bmSelectLargeBytes)
-	bs.AddBenchmark("SelectPreparedLargeBytes", 100000, bmSelectPreparedLargeBytes)
-	bs.AddBenchmark("SelectLargeRaw", 100000, bmSelectLargeRaw)
-	bs.AddBenchmark("SelectPreparedLargeRaw", 100000, bmSelectPreparedLargeRaw)
+	bs.AddBenchmark("SimpleExec", 250000, bmSimpleExec)
+	bs.AddBenchmark("PreparedExec", 250000, bmPreparedExec)
+	bs.AddBenchmark("SimpleQueryRow", 250000, bmSimpleQueryRow)
+	bs.AddBenchmark("PreparedQueryRow", 250000, bmPreparedQueryRow)
+	bs.AddBenchmark("PreparedQueryRowParam", 250000, bmPreparedQueryRowParam)
+	bs.AddBenchmark("EchoMixed5", 250000, bmEchoMixed5)
+	bs.AddBenchmark("SelectLargeString", 50000, bmSelectLargeString)
+	bs.AddBenchmark("SelectPreparedLargeString", 50000, bmSelectPreparedLargeString)
+	bs.AddBenchmark("SelectLargeBytes", 50000, bmSelectLargeBytes)
+	bs.AddBenchmark("SelectPreparedLargeBytes", 50000, bmSelectPreparedLargeBytes)
+	bs.AddBenchmark("SelectLargeRaw", 50000, bmSelectLargeRaw)
+	bs.AddBenchmark("SelectPreparedLargeRaw", 50000, bmSelectPreparedLargeRaw)
 	bs.AddBenchmark("PreparedExecConcurrent1", 500000, bmPreparedExecConcurrent1)
 	bs.AddBenchmark("PreparedExecConcurrent2", 500000, bmPreparedExecConcurrent2)
 	bs.AddBenchmark("PreparedExecConcurrent4", 500000, bmPreparedExecConcurrent4)
