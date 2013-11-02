@@ -22,7 +22,7 @@ A synthetic benchmark to compare the performance of various sql-drivers for Go's
 #### MySQL
 * fresh & clean install via `apt-get install mysql-server`
 * server version: 5.5.34-0ubuntu0.13.10.1
-* connected via Unix Domain Socket (/var/run/mysqld/mysqld.sock)
+* connected via Unix Domain Socket (`/var/run/mysqld/mysqld.sock`)
 * additional config:
 
 ```
@@ -36,12 +36,12 @@ query_cache_size = 128M
 
 ### Notes
 * We did a complete rewrite of the benchmark suite for this round. The results are note comparable to previous rounds.
-* The results should be now much more accurate and vary less.
-* The benchmark suite now includes concurrent test. These are probably the most interesting tests.
+* The results should now be much more accurate and vary less.
+* The benchmark suite now includes concurrent tests. These are probably the most interesting tests.
 * The memory footprint (per query) is now also measured.
 * Before each test the Garbage Collector is manually run to eliminate influence of garbage from previous tests.
-* The benchmarks are designed to minimize response latency from the server. We try to compare driver performance here and not to test the MySQL Server ;)
-* The memory footprint includes allocations by the database/sql package. In fact, for Go-MySQL-Driver 1.1 this is the large part, as you can see [in this memory profile](http://files.julienschmidt.com/public/go/sql-benchmark/mysql.PreparedQueryConcurrent4.mem.svg). The `mysql-rows.(*mysqlRows).Columns` block will hopefully elimnated after the Go 1.2 release [with this patch](https://codereview.appspot.com/17580043/).
+* The benchmarks are designed to minimize response latency from the server. We try to compare driver performance here and not to benchmark the MySQL Server ;)
+* The memory footprint includes allocations by the database/sql package. In fact, for Go-MySQL-Driver 1.1 this is the large part, as you can see [in this memory profile](http://files.julienschmidt.com/public/go/sql-benchmark/mysql.PreparedQueryConcurrent4.mem.svg). The `mysql-rows.(*mysqlRows).Columns` block will hopefully eliminated after the Go 1.2 release [with this patch](https://codereview.appspot.com/17580043/).
 
 
 ```
