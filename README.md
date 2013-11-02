@@ -35,7 +35,7 @@ query_cache_size = 128M
 * CPU frequency governor set to 'performance'
 
 ### Notes
-* We did a complete rewrite of the benchmark suite for this round. The results are note comparable to previous rounds.
+* We did a complete rewrite of the benchmark suite for this round. The results are not comparable to previous rounds.
 * The results should now be much more accurate and vary less.
 * The benchmark suite now includes concurrent tests. These are probably the most interesting tests.
 * The memory footprint (per query) is now also measured.
