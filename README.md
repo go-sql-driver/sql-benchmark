@@ -1,4 +1,4 @@
-#SQL-Benchmark
+# SQL-Benchmark
 
 A synthetic benchmark to compare the performance of various sql-drivers for Go's database/sql package
 
