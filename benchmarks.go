@@ -287,7 +287,7 @@ func runPreparedQueryConcurrent(db *sql.DB, n int, co int) error {
 	wg.Add(co)
 
 	for i := 0; i < co; i++ {
-		go func() {
+		go func(i int) {
 			var id int
 			var str string
 			for {
@@ -302,7 +302,7 @@ func runPreparedQueryConcurrent(db *sql.DB, n int, co int) error {
 					return
 				}
 			}
-		}()
+		}(i)
 	}
 	wg.Wait()
 	stmt.Close()
