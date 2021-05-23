@@ -4,12 +4,12 @@ A synthetic benchmark to compare the performance of various sql-drivers for Go's
 
 ## Results (2013-11-02)
 ### Older Results
-* [March 02, 2013](results_2013-03-02.md)
-* [February 26, 2013](results_2013-02-26.md)
+* [March 02, 2013](results/results_2013-03-02.md)
+* [February 26, 2013](results/results_2013-02-26.md)
 
 ### Contributed Results
-* [March 19, 2013](results-osx_2013-03-19.md) // OS X 10.8.3 / MySQL 5.6.10 by [Arne Hormann](https://github.com/arnehormann)
-* [March 19, 2013](results-linux_2013-03-19.md) // Linux / MySQL 5.5.27 by [Arne Hormann](https://github.com/arnehormann)
+* [March 19, 2013](results/results-osx_2013-03-19.md) // OS X 10.8.3 / MySQL 5.6.10 by [Arne Hormann](https://github.com/arnehormann)
+* [March 19, 2013](results/results-linux_2013-03-19.md) // Linux / MySQL 5.5.27 by [Arne Hormann](https://github.com/arnehormann)
 
 
 ### Setup
